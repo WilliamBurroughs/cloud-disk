@@ -1,0 +1,14 @@
+@import "../Fonts/fonts.scss";
+
+input {
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  width: 100%;
+  padding: 10px;
+  background: #d9d9d9;
+  border-radius: 10px;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}

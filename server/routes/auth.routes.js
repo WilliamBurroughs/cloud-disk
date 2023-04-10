@@ -3,6 +3,7 @@ const User = require("../models/User");
 const config = require("config");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware/auth.middleware");
 const { check, validationResult } = require("express-validator");
 const router = new Router();
 
@@ -53,12 +54,13 @@ router.post(
       if (!user) {
         return res.status(400).json({ message: "User not found" });
       }
-      const isPassValid = bcrypt.compareSync(password, user.password); // Comparing an encrypted password with an encrypted one
+      const isPassValid = bcrypt.compareSync(password, user.password); // Сравнение пользовательского пароля с зашифрованным
       if (!isPassValid) {
         return res.status(400).json({ message: "Invalid password" });
       }
       const token = jwt.sign({ id: user.id }, config.get("secretKey"), {
-        expiresIn: "1h",
+        // JWT token  1 - Объект с данными, который мы помещает в токен
+        expiresIn: "1h", // 2 - передаем секретный ключ 3 - сколько времени токен будет существовать
       });
       return res.json({
         token,
@@ -76,5 +78,27 @@ router.post(
     }
   }
 );
+
+router.get("/auth", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.user.id });
+    const token = jwt.sign({ id: user.id }, config.get("secretKey"), {
+      expiresIn: "1h",
+    });
+    return res.json({
+      token,
+      user: {
+        id: user.id,
+        email: user.email,
+        diskSpace: user.diskSpace,
+        usedSpace: user.usedSpace,
+        avatar: user.avatar,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.send({ message: "Server error" });
+  }
+});
 
 module.exports = router;

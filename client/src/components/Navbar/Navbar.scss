@@ -1,0 +1,93 @@
+@import "../../utils/Fonts/fonts.scss";
+.navbar {
+  // .navbar__container
+  background-color: #e8e4e4;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  &__container {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 120px;
+
+    @media (max-width: 1200px) {
+      padding: 0 120px;
+    }
+    @media (max-width: 1024px) {
+      padding: 0 120px;
+    }
+    @media (max-width: 768px) {
+      padding: 0 60px;
+      font-size: 20px;
+    }
+    @media (max-width: 480px) {
+      padding: 0 15px;
+      font-size: 15px;
+    }
+  }
+
+  // .navbar__logo-box
+
+  &__logo-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  // .navbar__logo
+
+  &__logo {
+    height: 30px;
+
+    @media (max-width: 480px) {
+      height: 25px;
+    }
+  }
+
+  // .navbar__title
+
+  &__title {
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  &__list {
+    display: flex;
+
+    @media (max-width: 768px) {
+      gap: 30px;
+    }
+    @media (max-width: 480px) {
+      gap: 15px;
+    }
+  }
+
+  // .navbar__item
+
+  &__item {
+    cursor: pointer;
+    line-height: 0;
+    margin: 0;
+    padding: 25px 20px;
+    transition: 0.5s ease;
+
+    &:hover {
+      background-color: rgb(64, 149, 152);
+    }
+    @media (max-width: 768px) {
+      padding: 0;
+    }
+  }
+  &active-link {
+    background-color: red;
+  }
+  // .navbar__link
+
+  &__link {
+    font-weight: 500;
+  }
+}
