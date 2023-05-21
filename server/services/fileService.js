@@ -13,8 +13,8 @@ class FileService {
         } else {
           return reject({ message: "File already exist" });
         }
-      } catch (error) {
-        return reject({ message: "File Error" });
+      } catch (e) {
+        return reject({ message: "File error" });
       }
     });
   }

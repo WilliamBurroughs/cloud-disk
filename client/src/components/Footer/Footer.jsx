@@ -12,8 +12,8 @@ const Footer = () => {
     <div className="footer">
       <div className="footer__container">
         <div className="footer__title">
-          <FontAwesomeIcon icon={faUserGraduate} size="2x" />{" "}
-          <div className="">Дипломная работа: Герасимова Никиты</div>
+          <FontAwesomeIcon icon={faUserGraduate} size="2x" />
+          <div className="title">Дипломная работа: Герасимова Никиты</div>
         </div>
         <div className="footer__info">
           <FontAwesomeIcon icon="fa-brands fa-github" size="2x" />

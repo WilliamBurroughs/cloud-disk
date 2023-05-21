@@ -6,6 +6,7 @@ import { registration } from "../../actions/user";
 const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
 
   return (
     <div className="registration">
@@ -22,7 +23,7 @@ const Registration = () => {
             value={email}
             setValue={setEmail}
             type="email"
-            placeholder="Email"
+            placeholder="E-mail"
           />
         </div>
         <div className="form-input">
@@ -33,9 +34,23 @@ const Registration = () => {
             placeholder="Пароль"
           />
         </div>
+        <div className="form-input">
+          <Input
+            value={repeatPassword}
+            setValue={setRepeatPassword}
+            type="password"
+            placeholder="Повторите пароль"
+          />
+        </div>
 
         <div className="registation__btn btn">
-          <button onClick={() => registration(email, password)}>
+          <button
+            onClick={() => {
+              repeatPassword === password
+                ? registration(email, password)
+                : alert("Пароли не совпадает");
+            }}
+          >
             Зарегистрироваться
           </button>
         </div>

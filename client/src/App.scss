@@ -1,3 +1,4 @@
+@import "./utils/Fonts/fonts.scss";
 * {
   padding: 0;
   margin: 0;
@@ -7,6 +8,7 @@
 html,
 body {
   background: #9acad9;
+  // font-family: "Montserrat", sans-serif;
 }
 
 ul,
@@ -20,6 +22,7 @@ a {
 
 [class*="__container"] {
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -28,7 +31,7 @@ a {
   background-color: rgb(64, 149, 152);
 }
 
-.Layout {
+.wrap {
   display: flex;
   flex-direction: column;
   height: 100vh;
