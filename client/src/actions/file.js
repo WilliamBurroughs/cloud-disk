@@ -1,6 +1,11 @@
 import axios from "axios";
-import { addFile, setFiles } from "../reducers/fileReducer";
-// import { downloadFile } from "../../../server/controllers/fileController";
+import { addFile, deleteFileAction, setFiles } from "../reducers/fileReducer";
+
+import {
+  addUploadFile,
+  changeUploadFile,
+  showUploader,
+} from "../reducers/uploadReducer";
 
 export function getFiles(dirId) {
   return async (dispatch) => {
@@ -47,6 +52,9 @@ export function uploadFile(file, dirId) {
       if (dirId) {
         formData.append("parent", dirId);
       }
+      const uploadFile = { name: file.name, progress: 0, id: Date.now() };
+      dispatch(showUploader());
+      dispatch(addUploadFile(uploadFile));
       const response = await axios.post(
         `http://localhost:5000/api/files/upload`,
         formData,
@@ -65,6 +73,10 @@ export function uploadFile(file, dirId) {
                 (progressEvent.loaded * 100) / totalLength
               );
               console.log(progress);
+              uploadFile.progress = Math.round(
+                (progressEvent.loaded * 100) / totalLength
+              );
+              dispatch(changeUploadFile(uploadFile));
             }
           },
         }
@@ -85,6 +97,7 @@ export async function downloadFile(file) {
       },
     }
   );
+  console.log(file._id);
   if (response.status === 200) {
     const blob = await response.blob();
     const downloadUrl = window.URL.createObjectURL(blob);
@@ -95,4 +108,23 @@ export async function downloadFile(file) {
     link.click();
     link.remove();
   }
+}
+
+export function deleteFile(file) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/files?id=${file._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(deleteFileAction(file._id));
+      alert(response.data.message);
+    } catch (e) {
+      alert(e?.response?.data?.message);
+    }
+  };
 }
