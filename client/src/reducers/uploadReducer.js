@@ -20,14 +20,14 @@ export default function userReducer(state = defaultState, action) {
     case REMOVE_UPLOAD_FILE:
       return {
         ...state,
-        files: [...state.files.filter((file) => file.id != action.payload)],
+        files: [...state.files.filter((file) => file.id !== action.payload)],
       };
     case CHANGE_UPLOAD_FILE:
       return {
         ...state,
         files: [
           ...state.files.map((file) =>
-            file.id == action.payload.id
+            file.id === action.payload.id
               ? { ...file, progress: action.payload.progress }
               : { ...file }
           ),
@@ -40,6 +40,7 @@ export default function userReducer(state = defaultState, action) {
 
 export const showUploader = () => ({ type: SHOW_UPLOADER });
 export const hideUploader = () => ({ type: HIDE_UPLOADER });
+
 export const addUploadFile = (file) => ({
   type: ADD_UPLOAD_FILE,
   payload: file,

@@ -4,24 +4,11 @@
   display: grid;
   grid-template-columns: 1fr 4fr repeat(4, 1fr);
   align-items: center;
-  @media (max-width: 1200px) {
-    padding: 0 120px;
-  }
-  @media (max-width: 1024px) {
-    padding: 0 120px;
-  }
-  @media (max-width: 768px) {
-    padding: 0 60px;
-    font-size: 20px;
-  }
-  @media (max-width: 480px) {
-    padding: 0 15px;
-    font-size: 15px;
-  }
+
   cursor: pointer;
   &:hover {
-    transition: transform 0.1s ease-in-out;
-    transform: scale(1.02);
+    transition: transform 0.2s ease-in-out;
+    transform: scale(1.01);
   }
   &__img {
     justify-self: center;
@@ -68,8 +55,24 @@
   }
 
   &__download {
+    @media (max-width: 768px) {
+      width: 100px;
+      font-size: 12px;
+    }
+    @media (max-width: 480px) {
+      width: 50px;
+      font-size: 10px;
+    }
   }
 
   &__delete {
+    @media (max-width: 768px) {
+      width: 100px;
+      font-size: 12px;
+    }
+    @media (max-width: 480px) {
+      width: 50px;
+      font-size: 10px;
+    }
   }
 }

@@ -11,11 +11,13 @@ const Disk = () => {
   const dispatch = useDispatch();
   const currentDir = useSelector((state) => state.file.currentDir);
   const dirStack = useSelector((state) => state.file.dirStack);
+  const loader = useSelector((state) => state.app.loader);
   const [dragEnter, setDragEnter] = useState(false);
+  const [sort, setSort] = useState("type");
 
   useEffect(() => {
-    dispatch(getFiles(currentDir));
-  }, [dispatch, currentDir]);
+    dispatch(getFiles(currentDir, sort));
+  }, [dispatch, currentDir, sort]);
 
   function backClickHandler() {
     const backDirId = dirStack.pop();
@@ -52,6 +54,18 @@ const Disk = () => {
     setDragEnter(false);
   }
 
+  if (loader === true) {
+    return (
+      <div className="loader">
+        <div class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
+  }
   return !dragEnter ? (
     <div
       className="disk"
@@ -60,9 +74,11 @@ const Disk = () => {
       onDragOver={dragEnterHandler}
     >
       <div className="disk__btns">
-        <button className="disk__back" onClick={() => backClickHandler()}>
-          Назад
-        </button>
+        {currentDir ? (
+          <button className="disk__back" onClick={() => backClickHandler()}>
+            Назад
+          </button>
+        ) : null}
         <button className="disk__create" onClick={() => showPopupHandler()}>
           Создать папку
         </button>
@@ -78,6 +94,15 @@ const Disk = () => {
             className="disk__upload-input"
           />
         </div>
+        <select
+          value={sort}
+          onChange={(event) => setSort(event.target.value)}
+          className="disk__select"
+        >
+          <option value="name">По имени</option>
+          <option value="type">По типу</option>
+          <option value="date">По дате</option>
+        </select>
       </div>
       <FileList />
       <Popup />

@@ -8,6 +8,20 @@
 
   //   font-size: 16px;
   //   font-family: "Montserrat", sans-serif;
+  @media (max-width: 1400px) {
+    padding: 0 60px;
+  }
+  @media (max-width: 1024px) {
+    padding: 0 60px;
+  }
+  @media (max-width: 768px) {
+    padding: 0 90px;
+    font-size: 14px;
+  }
+  @media (max-width: 480px) {
+    padding: 0 15px;
+    font-size: 12px;
+  }
   &__btns {
     display: flex;
   }
@@ -21,7 +35,7 @@
     font-size: 14px;
     align-self: center;
     font-family: "Montserrat", sans-serif;
-    transition: 0.5s ease;
+    // transition: 0.5s ease;
     &:hover {
       background-color: rgb(190, 221, 222);
     }
@@ -31,6 +45,21 @@
   }
   &__upload-label {
     cursor: pointer;
+  }
+  &__select {
+    cursor: pointer;
+    margin-left: 10px;
+    border-radius: 10px;
+    font-family: "Montserrat", sans-serif;
+
+    @media (max-width: 768px) {
+      padding: 0 5px;
+      font-size: 14px;
+    }
+    @media (max-width: 480px) {
+      width: 15px;
+      font-size: 12px;
+    }
   }
 }
 
@@ -44,6 +73,13 @@ button {
   border-radius: 6px;
   font-family: "Montserrat", sans-serif;
   transition: 0.5s ease;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 
   &:hover {
     background-color: rgb(190, 221, 222);
@@ -97,16 +133,65 @@ button {
   }
 }
 
-.drop-area {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  width: 100%;
-  height: calc(100vh - 100px - 40px);
-
-  margin: 20px 0;
-  border: dashed 2px;
+.loader {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
 }

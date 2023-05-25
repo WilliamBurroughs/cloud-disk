@@ -20,8 +20,8 @@ const UploadFile = ({ file }) => {
       <div className="upload-file__progress-bar">
         <div
           className="upload-file__upload-bar"
-          style={{ width: file.progress }}
-        ></div>
+          style={{ width: file.progress + "%" }}
+        />
         <div className="upload-file__percent">{file.progress}%</div>
       </div>
     </div>

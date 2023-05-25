@@ -7,7 +7,12 @@
   right: 20px;
   padding: 20px;
   border-radius: 15px;
-
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: 5px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   &__header {
     display: flex;
     justify-content: space-between;
@@ -59,17 +64,18 @@
   &__progress-bar {
     display: flex;
     justify-content: space-between;
-    background-color: #dae7e9;
+    // background-color: #dae7e9;
     width: 100%;
     align-items: center;
     margin: 3px 0;
   }
   &__upload-bar {
     border: 1px solid rgb(98, 98, 98);
+    // background-color: red;
     height: 0.5rem;
     width: 100%;
     margin-right: 5px;
-    background-color: #535b5e;
+    background-color: #444e51;
     border-radius: 8px;
   }
 }

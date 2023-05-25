@@ -2,6 +2,7 @@
 .filelist {
   margin: 20px 0;
   font-family: "Montserrat", sans-serif;
+
   &__header {
     display: grid;
     grid-template-columns: 1fr 4fr repeat(4, 1fr);
@@ -9,6 +10,13 @@
 
   &__name {
     grid-column-start: 2;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+    @media (max-width: 480px) {
+      font-size: 12px;
+    }
   }
   &__date {
     grid-column-start: 5;
@@ -24,5 +32,20 @@
     @media (max-width: 480px) {
       // grid-column-start: ;
     }
+  }
+}
+
+.file-enter-active {
+  animation: file-enter 500ms forwards;
+}
+
+@keyframes file-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

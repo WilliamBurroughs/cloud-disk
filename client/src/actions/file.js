@@ -6,20 +6,30 @@ import {
   changeUploadFile,
   showUploader,
 } from "../reducers/uploadReducer";
+import { hideLoader, showLoader } from "../reducers/appReducer";
 
-export function getFiles(dirId) {
+export function getFiles(dirId, sort) {
   return async (dispatch) => {
+    dispatch(showLoader());
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/files${dirId ? "?parent=" + dirId : ""}`,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
-
+      let url = `http://localhost:5000/api/files`;
+      if (dirId) {
+        url = `http://localhost:5000/api/files?parent=${dirId}`;
+      }
+      if (sort) {
+        url = `http://localhost:5000/api/files?sort=${sort}`;
+      }
+      if (dirId && sort) {
+        url = `http://localhost:5000/api/files?parent=${dirId}&sort=${sort}`;
+      }
+      const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
       dispatch(setFiles(response.data));
     } catch (e) {
       alert(e.response.data.message);
+    } finally {
+      dispatch(hideLoader());
     }
   };
 }
@@ -61,26 +71,17 @@ export function uploadFile(file, dirId) {
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           onUploadProgress: (progressEvent) => {
-            const totalLength = progressEvent.lengthComputable
-              ? progressEvent.total
-              : progressEvent.target.getResponseHeader("content-length") ||
-                progressEvent.target.getResponseHeader(
-                  "x-decompressed-content-length"
-                );
-            console.log("total", totalLength);
-            if (totalLength) {
-              let progress = Math.round(
-                (progressEvent.loaded * 100) / totalLength
-              );
-              console.log(progress);
-              uploadFile.progress = Math.round(
-                (progressEvent.loaded * 100) / totalLength
-              );
-              dispatch(changeUploadFile(uploadFile));
-            }
+            console.log("total", progressEvent);
+            // if (totalLength) {
+            uploadFile.progress = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            dispatch(changeUploadFile(uploadFile));
+            // }
           },
         }
       );
+      console.log(response.data);
       dispatch(addFile(response.data));
     } catch (e) {
       alert(e?.response?.data?.message);
@@ -125,6 +126,25 @@ export function deleteFile(file) {
       alert(response.data.message);
     } catch (e) {
       alert(e?.response?.data?.message);
+    }
+  };
+}
+export function searchFiles(search) {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/files/search?search=${search}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(setFiles(response.data));
+    } catch (e) {
+      alert(e?.response?.data?.message);
+    } finally {
+      dispatch(hideLoader());
     }
   };
 }
